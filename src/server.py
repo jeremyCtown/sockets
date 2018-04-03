@@ -6,7 +6,7 @@ def listen():
     port = 3000
     address = ('127.0.0.1', port)
 
-    print("--- Starting server on port {} at {}---".format(port, dt))
+    print("--- Starting server on port {} at {}---".format(port, dt.now()))
 
     sock = socket.socket(
         socket.AF_INET,
@@ -20,18 +20,19 @@ def listen():
         conn, addr = sock.accept()
         while True:
             message = conn.recv(16)
+            data = message.decode('utf8')
 
             try:
-                if message == 'quit':
-                    print("--- Stopping server on port {} at {}---".format(port, dt))
+                if data == 'quit':
+                    print("--- Stopping server on port {} at {}---".format(port, dt.now()))
                     conn.close()
                     sock.close()
                     quit()
                 else:
-                    conn.sendall(message.encode('utf8'))
-                    print(message)
+                    conn.sendall(data.encode('utf8'))
+                    print(data)
             except KeyboardInterrupt:
-                print("--- Stopping server on port {} at {}---".format(port, dt))
+                print("--- Stopping server on port {} at {}---".format(port, dt.now()))
                 conn.close()
                 sock.close()
                 quit()

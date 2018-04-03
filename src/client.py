@@ -16,7 +16,7 @@ def echo():
 
     try:
         message = input('Enter Echo > ')
-        sock.sendall(message)
+        sock.sendall(message.encode('utf8'))
 
         received = 0
         expected = len(message)
@@ -35,8 +35,9 @@ def echo():
         sock.close()
         quit()
 
+
 if __name__ == "__main__":
     try:
-        listen()
+        echo()
     except KeyboardInterrupt:
         pass
