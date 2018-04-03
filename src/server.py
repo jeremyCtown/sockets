@@ -18,8 +18,9 @@ def listen():
 
     while True:
         conn, addr = sock.accept()
+        buffer_length = 8
         while True:
-            message = conn.recv(16)
+            message = conn.recv(buffer_length)
             data = message.decode('utf8')
 
             try:
@@ -28,6 +29,9 @@ def listen():
                     conn.close()
                     sock.close()
                     quit()
+                elif len(message) < buffer_length:
+                    # message_complete = True
+                    break
                 else:
                     conn.sendall(data.encode('utf8'))
                     print(data)
@@ -45,9 +49,6 @@ if __name__ == "__main__":
         pass
 
 
-# buffer_length = 8
-# message_complete = False
-# message = "--- Starting server on port {} at {}---".format(port, dt)
 
 # conn.sendall(message.encode('utf8'))
 
