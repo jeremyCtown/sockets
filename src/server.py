@@ -6,8 +6,8 @@ def listen():
     """
     Listens for request from client
     """
-    port = 3000
-    address = ('127.0.0.1', port)
+    PORT = 3000
+    address = ('127.0.0.1', PORT)
 
     sock = socket.socket(
         socket.AF_INET,
@@ -25,13 +25,17 @@ def listen():
 
         buffer_length = 8
 
+        message = b''
+
+        if len(message)%buffer_length == 0:
+            buffer_length == 7
+
         message_complete = False
         
-        message = b''
         while not message_complete:
             part = conn.recv(buffer_length)
             message += part
-            if len(part) < buffer_length:
+            if part < buffer_length:
                 break
         
         message = message.decode('utf8')

@@ -16,11 +16,14 @@ def echo():
 
     client.connect(stream_info[-1])
 
-    message = str(sys.argv[1])
+    message = str(sys.argv[1:])
 
     client.sendall(message.encode('utf8'))
 
-    buffer_length = len(message)/
+    buffer_length = 8
+
+    if len(message) % buffer_length == 0:
+        buffer_length == 7
 
     message_complete = False
 
