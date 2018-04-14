@@ -37,8 +37,8 @@ def listen():
         
         client_msg = message[:-9].decode('utf8')
 
-        message = recieved_message + '***END***'
-        print ('{} Echoed: {}'.format(dt.now().strftime('%H:%M:%S %d-%m-%y'), message))
+        message = client_msg + '***END***'
+        print ('{} Echoed: {}'.format(dt.now().strftime('%H:%M:%S %d-%m-%y'), client_msg))
 
         conn.sendall(message.encode('utf8'))
 
