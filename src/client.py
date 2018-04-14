@@ -3,6 +3,9 @@ import sys
 
 
 def echo():
+    """
+    Checks that connection to server is solid
+    """
     port = 3000
 
     infos = socket.getaddrinfo('127.0.0.1', port)
@@ -13,7 +16,9 @@ def echo():
 
     client.connect(stream_info[-1])
 
-    message = str(sys.argv[1])
+    client_msg = str(sys.argv[1])
+
+    message = client_msg + '***END***'
 
     client.sendall(message.encode('utf8'))
 
@@ -26,10 +31,10 @@ def echo():
     while not message_complete:
         part = client.recv(buffer_length)
         server_msg += part
-        if len(part) < buffer_length:
+        if b'***END***' in server_msg:
             break
 
-    server_msg = server_msg.decode('utf8')
+    server_msg = server_msg[:-9].decode('utf8')
     print(server_msg)
 
     client.close()

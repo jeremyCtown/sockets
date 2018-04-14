@@ -3,6 +3,9 @@ from datetime import datetime as dt
 
 
 def listen():
+    """
+    Listens for request from client
+    """
     port = 3000
     address = ('127.0.0.1', port)
 
@@ -22,17 +25,20 @@ def listen():
 
         buffer_length = 8
 
+        message = b''
+
         message_complete = False
         
-        message = b''
         while not message_complete:
             part = conn.recv(buffer_length)
             message += part
-            if len(part) < buffer_length:
+            if b'***END***' in message:
                 break
         
-        message = message.decode('utf8')
-        print ('{} Echoed: {}'.format(dt.now().strftime('%H:%M:%S %d-%m-%y'), message))
+        client_msg = message[:-9].decode('utf8')
+
+        message = client_msg + '***END***'
+        print ('{} Echoed: {}'.format(dt.now().strftime('%H:%M:%S %d-%m-%y'), client_msg))
 
         conn.sendall(message.encode('utf8'))
 
