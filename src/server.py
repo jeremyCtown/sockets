@@ -27,18 +27,17 @@ def listen():
 
         message = b''
 
-        if len(message)%buffer_length == 0:
-            buffer_length == 7
-
         message_complete = False
         
         while not message_complete:
             part = conn.recv(buffer_length)
             message += part
-            if len(part) < buffer_length:
+            if b'***END***' in message:
                 break
         
-        message = message.decode('utf8')
+        client_msg = message[:-9].decode('utf8')
+
+        message = recieved_message + '***END***'
         print ('{} Echoed: {}'.format(dt.now().strftime('%H:%M:%S %d-%m-%y'), message))
 
         conn.sendall(message.encode('utf8'))
