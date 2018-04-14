@@ -3,6 +3,9 @@ from datetime import datetime as dt
 
 
 def listen():
+    """
+    Listens for request from client
+    """
     port = 3000
     address = ('127.0.0.1', port)
 

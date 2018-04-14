@@ -3,6 +3,9 @@ import sys
 
 
 def echo():
+    """
+    Checks that connection to server is solid
+    """
     port = 3000
 
     infos = socket.getaddrinfo('127.0.0.1', port)
@@ -17,7 +20,7 @@ def echo():
 
     client.sendall(message.encode('utf8'))
 
-    buffer_length = 8
+    buffer_length = len(message)/
 
     message_complete = False
 
